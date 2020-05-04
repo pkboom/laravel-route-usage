@@ -9,7 +9,7 @@ class CreateRouteHistoryTable extends Migration
     public function up()
     {
         Schema::create('route_history', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('domain')->nullable();
             $table->string('uri');
             $table->string('method');
