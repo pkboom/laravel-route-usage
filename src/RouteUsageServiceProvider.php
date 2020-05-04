@@ -17,6 +17,12 @@ class RouteUsageServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../config/route-usage.php' => config_path('route-usage.php'),
+        ], 'config');
+
+        $this->mergeConfigFrom(__DIR__.'/../config/route-usage.php', 'route-usage');
+
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if ($this->app->runningInConsole()) {

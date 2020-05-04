@@ -36,6 +36,27 @@ You can remove a route usage that are older than 6 months:
 php artisan route-usage:remove
 ```
 
+You can optionally publish the config file with:
+
+```php
+php artisan vendor:publish --provider="Pkboom\RouteUsage\RouteUsageServiceProvider" --tag="config"
+```
+
+This is the contents of the published config file:
+
+```
+<?php
+
+return [
+    /*
+     * List of uris to be excluded when route-usage:show runs.
+     */
+    'exclude' => [
+        '_debugbar/*', 'horizon/*', 'telescope/*',
+    ],
+];
+```
+
 ### Testing
 
 ```bash

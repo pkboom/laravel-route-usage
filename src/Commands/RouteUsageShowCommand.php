@@ -2,6 +2,7 @@
 
 namespace Pkboom\RouteUsage\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Console\Command;
@@ -35,7 +36,11 @@ class RouteUsageShowCommand extends Command
             ->groupBy('method', 'domain', 'uri')
             ->get();
 
-        $routes = collect($routes)->map(function ($route) use ($routeRecords) {
+        $routes = collect($routes)->reject(function ($route) {
+            return collect(config('route-usage.exclude'))->first(function ($exclude) use ($route) {
+                return Str::is($exclude, $route['uri']);
+            });
+        })->map(function ($route) use ($routeRecords) {
             $routeRecord = collect($routeRecords)->first(function ($routeRecord) use ($route) {
                 return $routeRecord->method === $route['method'] &&
                     $routeRecord->domain === $route['domain'] &&
