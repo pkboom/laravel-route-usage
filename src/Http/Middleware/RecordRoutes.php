@@ -1,26 +1,22 @@
 <?php
 
-namespace Pkboom\RouteUsageCounter\Http\Middleware;
+namespace Pkboom\RouteUsage\Http\Middleware;
 
 use Closure;
-use App\RouteHistory;
-use Illuminate\Support\Str;
+use Pkboom\RouteUsage\Models\RouteHistory;
 
 class RecordRoutes
 {
     public function handle($request, Closure $next)
     {
+        $response = $next($request);
+
         RouteHistory::create([
-            'domain' => $this->withoutDomain($request) ? null : $request->getHttpHost(),
+            'domain' => $request->route()->domain(),
             'method' => $request->method(),
             'uri' => $request->path(),
         ]);
 
-        return $next($request);
-    }
-
-    public function withoutDomain($request)
-    {
-        return Str::of($request->getHttpHost())->startsWith('www.') || count(explode('.', $request->getHttpHost())) === 2;
+        return $response;
     }
 }

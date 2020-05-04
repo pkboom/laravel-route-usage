@@ -1,15 +1,15 @@
 <?php
 
-namespace Pkboom\RouteUsageCounter\Commands;
+namespace Pkboom\RouteUsage\Commands;
 
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class RouteUsageCommand extends Command
+class RouteUsageShowCommand extends Command
 {
-    protected $signature = 'route:usage';
+    protected $signature = 'route-usage:show';
 
     protected $router;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pkboom\RouteUsageCounter\Models;
+namespace Pkboom\RouteUsage\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
