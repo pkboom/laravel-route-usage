@@ -51,6 +51,8 @@ class RouteUsageShowCommand extends Command
             $route['last_visited_at'] = optional($routeRecord)->last_visited_at;
 
             return $route;
+        })->sortByDesc(function ($route) {
+            return $route['count'];
         });
 
         $headers = ['Domain', 'Method', 'Uri', 'Name', 'Count', 'Last visited at'];
