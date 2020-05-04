@@ -1,6 +1,6 @@
 # Route usage counter for Laravel apps
 
-[![Latest Stable Version](https://poser.pugx.org/pkboom/laravel-calm/v/stable)](https://packagist.org/packages/pkboom/laravel-calm)
+[![Latest Stable Version](https://poser.pugx.org/pkboom/laravel-route-usage/v/stable)](https://packagist.org/packages/pkboom/laravel-route-usage)
 [![Build Status](https://travis-ci.com/pkboom/laravel-route-usage.svg?branch=master)](https://travis-ci.com/pkboom/laravel-route-usage)
 
 This Laravel package shows a route usage.
