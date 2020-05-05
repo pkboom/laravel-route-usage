@@ -13,9 +13,9 @@ class RecordRoutes
 
         if ($response->isSuccessful() || $response->isRedirection()) {
             RouteHistory::create([
-            'domain' => $request->route()->domain(),
-            'method' => $request->method(),
-            'uri' => $request->path(),
+                'domain' => $request->route()->domain(),
+                'method' => $request->method(),
+                'uri' => $request->path(),
             ]);
         }
 

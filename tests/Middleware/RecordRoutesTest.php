@@ -25,8 +25,11 @@ class RecordRoutesTest extends TestCase
         $request->shouldReceive('route')->andReturn($route = Mockery::mock(new Route()));
         $route->shouldReceive('domain')->andReturn($domain);
 
-        (new RecordRoutes())->handle($request, function () {
-            return true;
+        $response = Mockery::mock(new Response());
+        $response->shouldReceive('isSuccessful')->andReturn(true);
+
+        (new RecordRoutes())->handle($request, function () use ($response) {
+            return $response;
         });
 
         $this->assertEquals(1, RouteHistory::count());
@@ -49,9 +52,28 @@ class RecordRoutesTest extends TestCase
             ['{account}.haha.com', 'GET', 'haha.com', '/'],
         ];
     }
+
+    /** @test */
+    public function it_does_not_record_route_when_response_is_invalid()
+    {
+        $request = Mockery::mock(new Request());
+        $response = Mockery::mock(new Response());
+        $response->shouldReceive('isSuccessful')->andReturn(false);
+        $response->shouldReceive('isRedirection')->andReturn(false);
+
+        (new RecordRoutes())->handle($request, function () use ($response) {
+            return $response;
+        });
+
+        $this->assertEquals(0, RouteHistory::count());
+    }
 }
 
 class Request
+{
+}
+
+class Response
 {
 }
 
