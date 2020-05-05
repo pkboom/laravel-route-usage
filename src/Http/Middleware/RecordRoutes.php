@@ -11,11 +11,13 @@ class RecordRoutes
     {
         $response = $next($request);
 
-        RouteHistory::create([
+        if ($response->isSuccessful() || $response->isRedirection()) {
+            RouteHistory::create([
             'domain' => $request->route()->domain(),
             'method' => $request->method(),
             'uri' => $request->path(),
-        ]);
+            ]);
+        }
 
         return $response;
     }
