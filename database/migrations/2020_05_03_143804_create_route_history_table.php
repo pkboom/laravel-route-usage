@@ -10,9 +10,9 @@ class CreateRouteHistoryTable extends Migration
     {
         Schema::create('route_history', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('method');
             $table->string('domain')->nullable();
             $table->string('uri');
-            $table->string('method');
             $table->timestamp('created_at')->useCurrent();
         });
     }

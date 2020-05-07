@@ -2,40 +2,47 @@
 
 namespace Tests\Middleware;
 
-use Mockery;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Pkboom\RouteUsage\Http\Middleware\RecordRoutes;
+use Illuminate\Support\Facades\Route as FacadesRoute;
 use Pkboom\RouteUsage\Models\RouteHistory;
 
 class RecordRoutesTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp():void
+    {
+        parent::setUp();
+
+        FacadesRoute::domain('app.haha.com')->get('/', function () {});
+
+        FacadesRoute::domain('{account}.haha.com')->get('/', function () {});
+
+        FacadesRoute::get('/', function () {});
+
+        FacadesRoute::get('hoho', function () {});
+
+        FacadesRoute::post('/', function () {});
+
+        FacadesRoute::put('/', function () {});
+
+        FacadesRoute::delete('/', function () {});
+    }
+
     /**
      * @dataProvider dataProvider
      * @test
      */
-    public function record_routes($domain, $method, $host, $uri)
+    public function record_routes($method, $uri)
     {
-        $request = Mockery::mock(new Request());
-        $request->shouldReceive('getHttpHost')->andReturn($host);
-        $request->shouldReceive('method')->andReturn($method);
-        $request->shouldReceive('path')->andReturn($uri);
-        $request->shouldReceive('route')->andReturn($route = Mockery::mock(new Route()));
-        $route->shouldReceive('domain')->andReturn($domain);
-
-        $response = Mockery::mock(new Response());
-        $response->shouldReceive('isSuccessful')->andReturn(true);
-
-        (new RecordRoutes())->handle($request, function () use ($response) {
-            return $response;
-        });
-
+        $this->{strtolower($method)}($uri);
+      
         $this->assertEquals(1, RouteHistory::count());
+
         $this->assertDatabaseHas('route_history', [
-            'domain' => $domain,
             'method' => $method,
+            'domain' => null,
             'uri' => $uri,
         ]);
     }
@@ -43,40 +50,45 @@ class RecordRoutesTest extends TestCase
     public function dataProvider()
     {
         return [
-            [null, 'GET', 'haha.com', '/'],
-            [null, 'GET', 'haha.com', '/hoho'],
-            [null, 'POST', 'haha.com', '/'],
-            [null, 'DELETE', 'haha.com', '/'],
-            [null, 'PUT', 'haha.com', '/'],
-            ['app.haha.com', 'GET', 'haha.com', '/'],
-            ['{account}.haha.com', 'GET', 'haha.com', '/'],
+            ['GET', '/'],
+            ['GET', 'hoho'],
+            ['POST', '/'],
+            ['DELETE', '/'],
+            ['PUT', '/'],
         ];
+    }
+
+    /** @test */
+    public function record_domain_routes()
+    {
+        $this->get('http://app.haha.com');
+
+        $this->assertEquals(1, RouteHistory::count());
+
+        $this->assertDatabaseHas('route_history', [
+            'domain' => 'app.haha.com',
+            'method' => 'GET',
+            'uri' => '/',
+        ]);
+        
+        RouteHistory::truncate();
+
+        $this->get('http://account1.haha.com');
+        
+        $this->assertEquals(1, RouteHistory::count());
+
+        $this->assertDatabaseHas('route_history', [
+            'domain' => '{account}.haha.com',
+            'method' => 'GET',
+            'uri' => '/',
+        ]);
     }
 
     /** @test */
     public function it_does_not_record_route_when_response_is_invalid()
     {
-        $request = Mockery::mock(new Request());
-        $response = Mockery::mock(new Response());
-        $response->shouldReceive('isSuccessful')->andReturn(false);
-        $response->shouldReceive('isRedirection')->andReturn(false);
-
-        (new RecordRoutes())->handle($request, function () use ($response) {
-            return $response;
-        });
+        $this->get('wrong route');
 
         $this->assertEquals(0, RouteHistory::count());
     }
-}
-
-class Request
-{
-}
-
-class Response
-{
-}
-
-class Route
-{
 }
