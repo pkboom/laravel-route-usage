@@ -31,7 +31,7 @@ You can see a route usage with:
 php artisan route-usage:show
 ```
 
-You can remove a route usage that are older than 6 months:
+You can remove a route usage that are older than 3 months:
 
 ```php
 php artisan route-usage:remove

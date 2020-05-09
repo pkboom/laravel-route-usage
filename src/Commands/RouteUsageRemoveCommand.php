@@ -11,8 +11,8 @@ class RouteUsageRemoveCommand extends Command
 
     public function handle()
     {
-        RouteHistory::where('created_at', '<', now()->subMonths(6));
+        RouteHistory::where('created_at', '<', now()->subMonths(3));
 
-        $this->info('Routes that are older than 6 months have been removed.');
+        $this->info('Routes that are older than 3 months have been removed.');
     }
 }
