@@ -31,7 +31,7 @@ You can see a route usage with:
 php artisan route-usage:show
 ```
 
-You can remove a route usage that are older than 3 months:
+You can remove a route usage that are older than 6 months:
 
 ```php
 php artisan route-usage:remove
@@ -43,7 +43,7 @@ You can see referers.
 php artisan route-usage:referers
 ```
 
-<img src="/images/demo2.png" width="800"  title="demo2">
+<img src="/images/demo2.png" width="600"  title="demo2">
 
 You can optionally publish the config file with:
 
