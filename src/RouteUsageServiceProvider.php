@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Pkboom\RouteUsage\Http\Middleware\RecordRoutes;
 use Pkboom\RouteUsage\Commands\RouteUsageShowCommand;
 use Pkboom\RouteUsage\Commands\RouteUsageRemoveCommand;
+use Pkboom\RouteUsage\Commands\RouteUsageReferersCommand;
 
 class RouteUsageServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class RouteUsageServiceProvider extends ServiceProvider
             $this->commands([
                 RouteUsageShowCommand::class,
                 RouteUsageRemoveCommand::class,
+                RouteUsageReferersCommand::class,
             ]);
         }
     }

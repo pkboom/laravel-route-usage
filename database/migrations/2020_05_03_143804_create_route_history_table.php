@@ -13,6 +13,7 @@ class CreateRouteHistoryTable extends Migration
             $table->string('method');
             $table->string('domain')->nullable();
             $table->string('uri');
+            $table->string('referer')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });
     }

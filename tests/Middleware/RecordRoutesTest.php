@@ -3,15 +3,15 @@
 namespace Tests\Middleware;
 
 use Tests\TestCase;
+use Pkboom\RouteUsage\Models\RouteHistory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route as FacadesRoute;
-use Pkboom\RouteUsage\Models\RouteHistory;
 
 class RecordRoutesTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -37,7 +37,7 @@ class RecordRoutesTest extends TestCase
     public function record_routes($method, $uri)
     {
         $this->{strtolower($method)}($uri);
-      
+
         $this->assertEquals(1, RouteHistory::count());
 
         $this->assertDatabaseHas('route_history', [
@@ -70,11 +70,11 @@ class RecordRoutesTest extends TestCase
             'method' => 'GET',
             'uri' => '/',
         ]);
-        
+
         RouteHistory::truncate();
 
         $this->get('http://account1.haha.com');
-        
+
         $this->assertEquals(1, RouteHistory::count());
 
         $this->assertDatabaseHas('route_history', [
@@ -90,5 +90,35 @@ class RecordRoutesTest extends TestCase
         $this->get('wrong route');
 
         $this->assertEquals(0, RouteHistory::count());
+    }
+
+    /** @test */
+    public function record_referer_with_utm_source()
+    {
+        $this->get('http://haha.com/?utm_source=facebook.com');
+
+        $this->assertEquals(1, RouteHistory::count());
+
+        $this->assertDatabaseHas('route_history', [
+            'method' => 'GET',
+            'uri' => '/',
+            'referer' => 'facebook.com',
+        ]);
+    }
+
+    /** @test */
+    public function record_referer_from_request()
+    {
+        $this->get('http://haha.com', [
+            'referer' => 'http://google.com',
+        ]);
+
+        $this->assertEquals(1, RouteHistory::count());
+
+        $this->assertDatabaseHas('route_history', [
+            'method' => 'GET',
+            'uri' => '/',
+            'referer' => 'google.com',
+        ]);
     }
 }

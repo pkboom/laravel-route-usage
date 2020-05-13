@@ -4,6 +4,7 @@ namespace Pkboom\RouteUsage\Http\Middleware;
 
 use Closure;
 use Pkboom\RouteUsage\Models\RouteHistory;
+use Pkboom\RouteUsage\Referer;
 
 class RecordRoutes
 {
@@ -16,6 +17,7 @@ class RecordRoutes
                 'method' => $request->method(),
                 'domain' => $request->route()->domain(),
                 'uri' => $request->path(),
+                'referer' => (new Referer())->get($request),
             ]);
         }
 

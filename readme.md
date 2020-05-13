@@ -7,7 +7,7 @@
 This Laravel package shows a route usage.
 
 This is a demo result.
-<img src="/images/result.png" width="800"  title="result">
+<img src="/images/demo.png" width="800"  title="demo">
 
 ## Installation
 
@@ -36,6 +36,14 @@ You can remove a route usage that are older than 3 months:
 ```php
 php artisan route-usage:remove
 ```
+
+You can see referers.
+
+```php
+php artisan route-usage:referers
+```
+
+<img src="/images/demo2.png" width="800"  title="demo2">
 
 You can optionally publish the config file with:
 
