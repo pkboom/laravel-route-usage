@@ -51,7 +51,7 @@ You can see run time.
 php artisan route-usage:runtime
 ```
 
-<img src="/images/demo2.png" width="600"  title="demo3">
+<img src="/images/demo3.png" width="600"  title="demo3">
 
 You can optionally publish the config file with:
 
