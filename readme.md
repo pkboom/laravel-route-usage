@@ -27,33 +27,41 @@ php artisan migrate
 
 You can see a route usage with:
 
-```php
+```bash
 php artisan route-usage:show
 ```
 
-You can remove a route usage that are older than 6 months:
+You can remove a route usage that are older than 1 month:
 
-```php
+```bash
 php artisan route-usage:remove
 ```
 
 You can see referers.
 
-```php
+```bash
 php artisan route-usage:referers
 ```
 
 <img src="/images/demo2.png" width="600"  title="demo2">
 
+You can see run time.
+
+```bash
+php artisan route-usage:runtime
+```
+
+<img src="/images/demo2.png" width="600"  title="demo3">
+
 You can optionally publish the config file with:
 
-```php
+```bash
 php artisan vendor:publish --provider="Pkboom\RouteUsage\RouteUsageServiceProvider" --tag="config"
 ```
 
 This is the contents of the published config file:
 
-```
+```php
 <?php
 
 return [
