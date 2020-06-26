@@ -1,4 +1,4 @@
-# Route usage counter for Laravel apps
+# Simple route usage analyzer for Laravel apps
 
 [![Latest Stable Version](https://poser.pugx.org/pkboom/laravel-route-usage/v/stable)](https://packagist.org/packages/pkboom/laravel-route-usage)
 [![Total Downloads](https://poser.pugx.org/pkboom/laravel-route-usage/downloads)](https://packagist.org/packages/pkboom/laravel-route-usage)

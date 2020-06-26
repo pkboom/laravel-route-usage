@@ -19,11 +19,12 @@ class RouteUsageRuntimeCommand extends Command
                     $routeRecord->domain,
                     $routeRecord->method,
                     $routeRecord->uri,
+                    $routeRecord->query,
                     $routeRecord->run_time,
                 ];
             });
 
-        $headers = ['Domain', 'Method', 'Uri', 'Run time(ms)'];
+        $headers = ['Domain', 'Method', 'Uri', 'Query', 'Run time(ms)'];
 
         $this->table($headers, $routeRecords);
     }

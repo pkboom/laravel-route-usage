@@ -18,9 +18,4 @@ class CreateRouteHistoryTable extends Migration
             $table->timestamp('created_at')->useCurrent();
         });
     }
-
-    public function down()
-    {
-        Schema::dropIfExists('route_history');
-    }
 }
