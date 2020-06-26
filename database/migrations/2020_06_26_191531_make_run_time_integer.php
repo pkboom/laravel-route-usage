@@ -10,7 +10,7 @@ class MakeRunTimeInteger extends Migration
     public function up()
     {
         DB::table('route_history')->update([
-            'run_time' => null,
+            'run_time' => 0,
         ]);
 
         Schema::table('route_history', function (Blueprint $table) {
