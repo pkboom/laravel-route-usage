@@ -12,7 +12,7 @@ class RouteUsageRuntimeCommand extends Command
     public function handle()
     {
         $routeRecords = DB::table('route_history')
-            ->orderBy('run_time')
+            ->orderBy('run_time', 'desc')
             ->get()
             ->map(function ($routeRecord) {
                 return [
