@@ -22,7 +22,7 @@ class RecordRoutes
                 'uri' => $request->path(),
                 'query' => Arr::query($request->query()),
                 'referer' => (new Referer())->get($request),
-                'run_time' => round((microtime(true) - $startTime) * 1000, 2),
+                'run_time' => round((microtime(true) - $startTime) * 1000),
             ]);
         }
 
