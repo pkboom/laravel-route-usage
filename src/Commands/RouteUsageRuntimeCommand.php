@@ -13,6 +13,7 @@ class RouteUsageRuntimeCommand extends Command
     {
         $routeRecords = DB::table('route_history')
             ->orderBy('run_time', 'desc')
+            ->take(100)
             ->get()
             ->map(function ($routeRecord) {
                 return [
