@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\DB;
 
 class RouteUsageRuntimeCommand extends Command
 {
-    protected $signature = 'route-usage:runtime';
+    protected $signature = 'route-usage:runtime {--line=200}';
 
     public function handle()
     {
         $routeRecords = DB::table('route_history')
             ->orderBy('run_time', 'desc')
-            ->take(100)
+            ->take($this->option('line'))
             ->get()
             ->map(function ($routeRecord) {
                 return [
